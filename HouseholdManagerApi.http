@@ -1,4 +1,4 @@
-@WebApplication1_HostAddress = http://localhost:5111
+@WebApplication1_HostAddress = http://localhost:8080
 
 GET {{WebApplication1_HostAddress}}/tags/
 Accept: application/json
