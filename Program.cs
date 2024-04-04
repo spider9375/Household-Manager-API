@@ -1,7 +1,10 @@
+using AutoMapper;
 using HouseholdManagerApi.Interfaces.Repositories;
+using HouseholdManagerApi.MapperProfiles;
 using HouseholdManagerApi.Repositories;
-using Microsoft.EntityFrameworkCore;
-using WebApplication1.Models;
+using HouseholdManagerApi.Models;
+using HouseholdManagerApi.Interfaces.Services;
+using HouseholdManagerApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +18,9 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins("http://localhost:4200");
+        policy.WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
     });
 });
 
@@ -23,6 +28,19 @@ builder.Services.AddDbContext<HomeInventoryContext>();
 
 //Repositories
 builder.Services.AddScoped<ISavingRepository, SavingRepository>();
+//
+
+//Services
+builder.Services.AddScoped<ISavingService, SavingService>();
+//
+
+//AutoMapper
+var config = new MapperConfiguration(cfg =>
+{
+    cfg.AddProfile<SavingProfile>();
+});
+
+builder.Services.AddAutoMapper(typeof(Program));
 //
 
 var app = builder.Build();

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WebApplication1.Models;
+namespace HouseholdManagerApi.Models;
 
 public partial class Item
 {

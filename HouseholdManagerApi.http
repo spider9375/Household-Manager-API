@@ -1,6 +1,6 @@
-@WebApplication1_HostAddress = http://localhost:8080
+@HouseholdManagerApi_HostAddress = http://localhost:8080
 
-GET {{WebApplication1_HostAddress}}/tags/
+GET {{HouseholdManagerApi_HostAddress}}/tags/
 Accept: application/json
 
 ###

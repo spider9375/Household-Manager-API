@@ -1,7 +1,6 @@
-﻿using HouseholdManagerApi.Interfaces.Repositories;
-using Microsoft.AspNetCore.Http;
+﻿using HouseholdManagerApi.DTOs;
+using HouseholdManagerApi.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Models;
 
 namespace HouseholdManagerApi.Controllers
 {
@@ -9,34 +8,27 @@ namespace HouseholdManagerApi.Controllers
     [ApiController]
     public class SavingsController: ControllerBase
     {
-        private readonly ISavingRepository savingRepository;
-        public SavingsController(ISavingRepository savingRepository)
+        private readonly ISavingService savingService;
+        public SavingsController(ISavingService savingService)
         {
-            this.savingRepository = savingRepository;
+            this.savingService = savingService;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Saving>>> GetAllSavings()
+        public async Task<ActionResult<IEnumerable<SavingDTO>>> GetAllSavings()
         {
-            return Ok(await this.savingRepository.GetAll());
+            return Ok(await this.savingService.GetAll());
         }
 
         [HttpPut]
         [Route("{id:guid}")]
-        public async Task<ActionResult<Saving>> UpdateSaving(Guid id, Saving saving)
+        public async Task<ActionResult<SavingDTO>> UpdateSaving(Guid id, SavingDTO saving)
         {
             if (id != saving.Id)
             {
                 return BadRequest("Id mismatch");
             }
 
-            var savingToUpdate = this.savingRepository.GetById(id);
-
-            if (savingToUpdate == null)
-            {
-                return NotFound();
-            }
-
-            return await this.savingRepository.Update(saving);
+            return await this.savingService.Update(saving);
         }
     }
 }

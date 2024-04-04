@@ -1,6 +1,4 @@
-﻿using WebApplication1.Models;
-
-namespace HouseholdManagerApi.Interfaces.Repositories
+﻿namespace HouseholdManagerApi.Interfaces.Repositories
 {
     public interface IRepository<T> where T : class
     {

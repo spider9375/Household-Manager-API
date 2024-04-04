@@ -1,6 +1,6 @@
 ﻿using HouseholdManagerApi.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
-using WebApplication1.Models;
+using HouseholdManagerApi.Models;
 
 namespace HouseholdManagerApi.Repositories
 {
@@ -8,19 +8,22 @@ namespace HouseholdManagerApi.Repositories
     {
         private readonly HomeInventoryContext dbContext = dbContext;
 
-        public Task<Saving> Create(Saving entity)
+        public async Task<Saving> Create(Saving entity)
         {
-            throw new NotImplementedException();
+            var res = await this.dbContext.Savings.AddAsync(entity);
+            await this.dbContext.SaveChangesAsync();
+
+            return res.Entity;
         }
 
-        public void Delete(Guid id)
+        public async void Delete(Guid id)
         {
-            var saving = this.dbContext.Savings.FirstOrDefault(saving => saving.Id == id);
+            var saving = await this.dbContext.Savings.FirstOrDefaultAsync(saving => saving.Id == id);
 
             if (saving != null)
             {
                 dbContext.Savings.Remove(saving);
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
             }
         }
 
@@ -29,14 +32,33 @@ namespace HouseholdManagerApi.Repositories
             return await this.dbContext.Savings.ToListAsync();
         }
 
-        public Task<Saving> GetById(Guid id)
+        public async Task<Saving> GetById(Guid id)
         {
-            throw new NotImplementedException();
+            var result = await this.dbContext.Savings.FirstOrDefaultAsync(s => s.Id == id);
+
+            return result;
         }
 
-        public Task<Saving> Update(Saving entity)
+        public async Task<Saving> Update(Saving entity)
         {
-            throw new NotImplementedException();
+            var result = await this.dbContext.Savings.FirstOrDefaultAsync(s => s.Id == entity.Id);
+
+            if (result != null)
+            {
+                result.Currency = entity.Currency;
+                result.TagId = entity.TagId;
+                result.Goal = entity.Goal;
+                result.Icon = entity.Icon;
+                result.Amount = entity.Amount;
+                result.Name = entity.Name;
+
+                await this.dbContext.SaveChangesAsync();
+
+                return result;
+            }
+
+
+            return null;
         }
     }
 }

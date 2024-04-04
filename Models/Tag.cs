@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WebApplication1.Models;
+namespace HouseholdManagerApi.Models;
 
 /// <summary>
 /// nomenclature that hold all possible categories for every item in the household

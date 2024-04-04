@@ -1,4 +1,4 @@
-﻿using WebApplication1.Models;
+﻿using HouseholdManagerApi.Models;
 
 namespace HouseholdManagerApi.Interfaces.Repositories
 {

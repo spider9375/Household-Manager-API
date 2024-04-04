@@ -1,8 +1,9 @@
 using HouseholdManagerApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Models;
+using HouseholdManagerApi.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace WebApplication1.Controllers
+namespace HouseholdManagerApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -11,7 +12,7 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Tag>>> GetAllTags()
         {
-            var res = dbContext.Tags.AsEnumerable();
+            var res = await dbContext.Tags.ToListAsync();
             return Ok(res);
         }
     }
