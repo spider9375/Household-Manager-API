@@ -22,9 +22,9 @@ namespace HouseholdManagerApi.Services
             return this.mapper.Map<SavingDTO>(result);
         }
 
-        public void Delete(Guid id)
+        public async Task Delete(int id)
         {
-            this.savingRepository.Delete(id);
+            await this.savingRepository.Delete(id);
         }
 
         public async Task<IEnumerable<SavingDTO>> GetAll()
@@ -34,7 +34,7 @@ namespace HouseholdManagerApi.Services
             return this.mapper.Map<IEnumerable<Saving>,IEnumerable<SavingDTO>>(result);
         }
 
-        public async Task<SavingDTO> GetById(Guid id)
+        public async Task<SavingDTO> GetById(int id)
         {
             return this.mapper.Map<SavingDTO>(await this.savingRepository.GetById(id));
         }

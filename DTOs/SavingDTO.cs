@@ -2,9 +2,9 @@
 {
     public class SavingDTO
     {
-        public Guid Id { get; set; }
+        public int? Id { get; set; }
 
-        public string Name { get; set; } = null!;
+        public string? Name { get; set; }
 
         public uint Amount { get; set; }
 
@@ -12,9 +12,9 @@
 
         public string? Icon { get; set; }
 
-        public string Currency { get; set; } = null!;
+        public string? Currency { get; set; }
 
-        public Guid Tag { get; set; }
+        public int? Tag { get; set; }
 
     }
 }

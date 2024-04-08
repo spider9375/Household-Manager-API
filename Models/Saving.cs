@@ -5,7 +5,7 @@ namespace HouseholdManagerApi.Models;
 
 public partial class Saving
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public string Name { get; set; } = null!;
 
@@ -17,7 +17,7 @@ public partial class Saving
 
     public string Currency { get; set; } = null!;
 
-    public Guid TagId { get; set; }
+    public int TagId { get; set; }
 
     public virtual Tag Tag { get; set; } = null!;
 }

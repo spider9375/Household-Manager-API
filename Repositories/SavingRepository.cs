@@ -10,13 +10,23 @@ namespace HouseholdManagerApi.Repositories
 
         public async Task<Saving> Create(Saving entity)
         {
-            var res = await this.dbContext.Savings.AddAsync(entity);
+            var newEntity = new Saving()
+            {
+                Name = entity.Name,
+                Amount = entity.Amount,
+                Currency = entity.Currency,
+                Goal = entity.Goal,
+                Icon = entity.Icon,
+                TagId = entity.TagId,
+            };
+            this.dbContext.Savings.Add(newEntity);
+
             await this.dbContext.SaveChangesAsync();
 
-            return res.Entity;
+            return newEntity;
         }
 
-        public async void Delete(Guid id)
+        public async Task Delete(int id)
         {
             var saving = await this.dbContext.Savings.FirstOrDefaultAsync(saving => saving.Id == id);
 
@@ -32,7 +42,7 @@ namespace HouseholdManagerApi.Repositories
             return await this.dbContext.Savings.ToListAsync();
         }
 
-        public async Task<Saving> GetById(Guid id)
+        public async Task<Saving> GetById(int id)
         {
             var result = await this.dbContext.Savings.FirstOrDefaultAsync(s => s.Id == id);
 

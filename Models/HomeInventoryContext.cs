@@ -15,7 +15,7 @@ public partial class HomeInventoryContext : DbContext
     {
     }
 
-    public virtual DbSet<Item> Items { get; set; }
+    public virtual DbSet<Efmigrationshistory> Efmigrationshistories { get; set; }
 
     public virtual DbSet<Saving> Savings { get; set; }
 
@@ -27,27 +27,14 @@ public partial class HomeInventoryContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Item>(entity =>
+        modelBuilder.Entity<Efmigrationshistory>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
+            entity.HasKey(e => e.MigrationId).HasName("PRIMARY");
 
-            entity.ToTable("items");
+            entity.ToTable("__efmigrationshistory");
 
-            entity.HasIndex(e => e.CategoryId, "FK_ITEM_CATEGORY");
-
-            entity.HasIndex(e => e.Id, "id_UNIQUE").IsUnique();
-
-            entity.Property(e => e.Id)
-                .HasDefaultValueSql("'uuid()'")
-                .HasColumnName("id");
-            entity.Property(e => e.CategoryId).HasColumnName("categoryId");
-            entity.Property(e => e.Name)
-                .HasMaxLength(45)
-                .HasColumnName("name");
-
-            entity.HasOne(d => d.Category).WithMany(p => p.Items)
-                .HasForeignKey(d => d.CategoryId)
-                .HasConstraintName("FK_ITEM_CATEGORY");
+            entity.Property(e => e.MigrationId).HasMaxLength(150);
+            entity.Property(e => e.ProductVersion).HasMaxLength(32);
         });
 
         modelBuilder.Entity<Saving>(entity =>
@@ -56,13 +43,11 @@ public partial class HomeInventoryContext : DbContext
 
             entity.ToTable("savings");
 
-            entity.HasIndex(e => e.TagId, "FK_SAVING_TAG");
+            entity.HasIndex(e => e.TagId, "FK_SAVING_TAG_idx");
 
             entity.HasIndex(e => e.Id, "id_UNIQUE").IsUnique();
 
-            entity.Property(e => e.Id)
-                .HasDefaultValueSql("'uuid()'")
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Amount).HasColumnName("amount");
             entity.Property(e => e.Currency)
                 .HasMaxLength(45)
@@ -78,6 +63,7 @@ public partial class HomeInventoryContext : DbContext
 
             entity.HasOne(d => d.Tag).WithMany(p => p.Savings)
                 .HasForeignKey(d => d.TagId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SAVING_TAG");
         });
 
@@ -85,11 +71,11 @@ public partial class HomeInventoryContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("tags", tb => tb.HasComment("nomenclature that hold all possible categories for every item in the household"));
+            entity.ToTable("tags");
 
-            entity.Property(e => e.Id)
-                .HasDefaultValueSql("'uuid()'")
-                .HasColumnName("id");
+            entity.HasIndex(e => e.Id, "id_UNIQUE").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Color)
                 .HasMaxLength(10)
                 .HasColumnName("color");

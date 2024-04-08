@@ -6,6 +6,9 @@ using HouseholdManagerApi.Models;
 using HouseholdManagerApi.Interfaces.Services;
 using HouseholdManagerApi.Services;
 
+//scaffold
+// Scaffold-DbContext "Server=127.0.0.1;Port=3306;Database=homeInventory;Uid=test-inventory;Pwd=112233" MySql.EntityFrameworkCore -OutputDir Models -f
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -28,16 +31,19 @@ builder.Services.AddDbContext<HomeInventoryContext>();
 
 //Repositories
 builder.Services.AddScoped<ISavingRepository, SavingRepository>();
+builder.Services.AddScoped<ITagRepository, TagRepository>();
 //
 
 //Services
 builder.Services.AddScoped<ISavingService, SavingService>();
+builder.Services.AddScoped<ITagService, TagService>();
 //
 
 //AutoMapper
 var config = new MapperConfiguration(cfg =>
 {
     cfg.AddProfile<SavingProfile>();
+    cfg.AddProfile<TagProfile>();
 });
 
 builder.Services.AddAutoMapper(typeof(Program));

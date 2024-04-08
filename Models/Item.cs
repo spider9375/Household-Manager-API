@@ -5,11 +5,11 @@ namespace HouseholdManagerApi.Models;
 
 public partial class Item
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public string Name { get; set; } = null!;
 
-    public Guid CategoryId { get; set; }
+    public int CategoryId { get; set; }
 
     public virtual Tag Category { get; set; } = null!;
 }
