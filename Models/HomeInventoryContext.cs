@@ -63,7 +63,7 @@ public partial class HomeInventoryContext : DbContext
 
             entity.HasOne(d => d.Tag).WithMany(p => p.Savings)
                 .HasForeignKey(d => d.TagId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK_SAVING_TAG");
         });
 
