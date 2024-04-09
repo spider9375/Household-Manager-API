@@ -24,21 +24,21 @@ namespace HouseholdManagerApi.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<ActionResult<TagDTO>> Create(TagDTO saving)
+        public async Task<ActionResult<TagDTO>> Create(TagDTO tag)
         {
-            return await tagService.Create(saving);
+            return await tagService.Create(tag);
         }
 
         [HttpPut]
         [Route("{id:int}")]
-        public async Task<ActionResult<TagDTO>> UpdateSaving(int id, TagDTO saving)
+        public async Task<ActionResult<TagDTO>> Update(int id, TagDTO tag)
         {
-            if (id != saving.Id)
+            if (id != tag.Id)
             {
                 return BadRequest("Id mismatch");
             }
 
-            return await tagService.Update(saving);
+            return await tagService.Update(tag);
         }
 
         [HttpDelete]
