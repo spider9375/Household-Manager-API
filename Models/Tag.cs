@@ -11,5 +11,7 @@ public partial class Tag
 
     public string? Color { get; set; }
 
+    public string? Icon { get; set; }
+
     public virtual ICollection<Saving> Savings { get; set; } = new List<Saving>();
 }

@@ -10,8 +10,6 @@
 
         public int? Goal { get; set; }
 
-        public string? Icon { get; set; }
-
         public string? Currency { get; set; }
 
         public int? Tag { get; set; }

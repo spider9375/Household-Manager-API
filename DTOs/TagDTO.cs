@@ -7,5 +7,7 @@
         public string Name { get; set; } = null!;
 
         public string? Color { get; set; }
+
+        public string? Icon { get; set; }
     }
 }

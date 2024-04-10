@@ -14,6 +14,7 @@ namespace HouseholdManagerApi.Repositories
             {
                 Name = entity.Name,
                 Color = entity.Color,
+                Icon = entity.Icon,
             };
             this.dbContext.Tags.Add(newEntity);
 
@@ -53,6 +54,7 @@ namespace HouseholdManagerApi.Repositories
             {
                 result.Color = entity.Color;
                 result.Name = entity.Name;
+                result.Icon = entity.Icon;
 
                 await this.dbContext.SaveChangesAsync();
 

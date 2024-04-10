@@ -16,7 +16,6 @@ namespace HouseholdManagerApi.Repositories
                 Amount = entity.Amount,
                 Currency = entity.Currency,
                 Goal = entity.Goal,
-                Icon = entity.Icon,
                 TagId = entity.TagId,
             };
             this.dbContext.Savings.Add(newEntity);
@@ -58,7 +57,6 @@ namespace HouseholdManagerApi.Repositories
                 result.Currency = entity.Currency;
                 result.TagId = entity.TagId;
                 result.Goal = entity.Goal;
-                result.Icon = entity.Icon;
                 result.Amount = entity.Amount;
                 result.Name = entity.Name;
 

@@ -13,8 +13,6 @@ public partial class Saving
 
     public int? Goal { get; set; }
 
-    public string? Icon { get; set; }
-
     public string Currency { get; set; } = null!;
 
     public int? TagId { get; set; }

@@ -53,9 +53,6 @@ public partial class HomeInventoryContext : DbContext
                 .HasMaxLength(45)
                 .HasColumnName("currency");
             entity.Property(e => e.Goal).HasColumnName("goal");
-            entity.Property(e => e.Icon)
-                .HasMaxLength(45)
-                .HasColumnName("icon");
             entity.Property(e => e.Name)
                 .HasMaxLength(45)
                 .HasColumnName("name");
@@ -79,6 +76,9 @@ public partial class HomeInventoryContext : DbContext
             entity.Property(e => e.Color)
                 .HasMaxLength(10)
                 .HasColumnName("color");
+            entity.Property(e => e.Icon)
+                .HasMaxLength(45)
+                .HasColumnName("icon");
             entity.Property(e => e.Name)
                 .HasMaxLength(45)
                 .HasColumnName("name");
