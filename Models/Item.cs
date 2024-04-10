@@ -9,7 +9,13 @@ public partial class Item
 
     public string Name { get; set; } = null!;
 
-    public int CategoryId { get; set; }
+    public int? TagId { get; set; }
 
-    public virtual Tag Category { get; set; } = null!;
+    public string? Quantity { get; set; }
+
+    public string? UnitOfMeasure { get; set; }
+
+    public DateTime? ExpirationDate { get; set; }
+
+    public virtual Tag? Tag { get; set; }
 }

@@ -17,6 +17,8 @@ public partial class HomeInventoryContext : DbContext
 
     public virtual DbSet<Efmigrationshistory> Efmigrationshistories { get; set; }
 
+    public virtual DbSet<Item> Items { get; set; }
+
     public virtual DbSet<Saving> Savings { get; set; }
 
     public virtual DbSet<Tag> Tags { get; set; }
@@ -35,6 +37,36 @@ public partial class HomeInventoryContext : DbContext
 
             entity.Property(e => e.MigrationId).HasMaxLength(150);
             entity.Property(e => e.ProductVersion).HasMaxLength(32);
+        });
+
+        modelBuilder.Entity<Item>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("items");
+
+            entity.HasIndex(e => e.TagId, "FK_ITEM_TAG_idx");
+
+            entity.HasIndex(e => e.Id, "id_UNIQUE").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.ExpirationDate)
+                .HasColumnType("datetime")
+                .HasColumnName("expirationDate");
+            entity.Property(e => e.Name)
+                .HasMaxLength(45)
+                .HasColumnName("name");
+            entity.Property(e => e.Quantity)
+                .HasMaxLength(45)
+                .HasColumnName("quantity");
+            entity.Property(e => e.TagId).HasColumnName("tagId");
+            entity.Property(e => e.UnitOfMeasure)
+                .HasMaxLength(45)
+                .HasColumnName("unitOfMeasure");
+
+            entity.HasOne(d => d.Tag).WithMany(p => p.Items)
+                .HasForeignKey(d => d.TagId)
+                .HasConstraintName("FK_ITEM_TAG");
         });
 
         modelBuilder.Entity<Saving>(entity =>
