@@ -1,11 +1,13 @@
 ﻿using HouseholdManagerApi.DTOs;
 using HouseholdManagerApi.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HouseholdManagerApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SavingsController: ControllerBase
     {
         private readonly ISavingService savingService;

@@ -2,10 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using HouseholdManagerApi.Models;
 using HouseholdManagerApi.DTOs;
 using HouseholdManagerApi.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HouseholdManagerApi.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class TagsController(ITagService tagService) : ControllerBase
     {

@@ -36,9 +36,9 @@ namespace HouseholdManagerApi.Repositories
             }
         }
 
-        public async Task<IEnumerable<Saving>> GetAll()
+        public IQueryable<Saving> GetAll()
         {
-            return await this.dbContext.Savings.ToListAsync();
+            return this.dbContext.Savings.AsQueryable();
         }
 
         public async Task<Saving> GetById(int id)

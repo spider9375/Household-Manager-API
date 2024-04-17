@@ -34,9 +34,9 @@ namespace HouseholdManagerApi.Repositories
             }
         }
 
-        public async Task<IEnumerable<Tag>> GetAll()
+        public IQueryable<Tag> GetAll()
         {
-            return await this.dbContext.Tags.ToListAsync();
+            return this.dbContext.Tags.AsQueryable();
         }
 
         public async Task<Tag> GetById(int id)

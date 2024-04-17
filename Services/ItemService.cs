@@ -15,32 +15,56 @@ namespace HouseholdManagerApi.Services
             this.mapper = mapper;
             this.itemRepository = itemRepository;
                 }
-        public async Task<ItemDTO> Create(ItemDTO entity)
+        public async Task<ItemDTO> Create(ItemDTO dto, string userId)
         {
-            var result = await this.itemRepository.Create(this.mapper.Map<Item>(entity));
+            var entity = this.mapper.Map<Item>(dto);
+            entity.UserId = userId;
+            var result = await this.itemRepository.Create(entity);
 
             return this.mapper.Map<ItemDTO>(result);
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(int id, string userId)
         {
-            await this.itemRepository.Delete(id);
+            var item = await this.GetById(id, userId);
+
+            if (item != null)
+            {
+                await this.itemRepository.Delete(id);
+
+            }
         }
 
-        public async Task<IEnumerable<ItemDTO>> GetAll()
+        public async Task<IEnumerable<ItemDTO>> GetAll(string userId)
         {
-            var result = await this.itemRepository.GetAll();
+            var result = this.itemRepository.GetAll()
+                .Where(i => i.UserId == userId)
+                .AsEnumerable();
 
-            return this.mapper.Map<IEnumerable<Item>,IEnumerable<ItemDTO>>(result);
+            return this.mapper.Map<IEnumerable<ItemDTO>>(result);
         }
 
-        public async Task<ItemDTO> GetById(int id)
+        public async Task<ItemDTO> GetById(int id, string userId)
         {
+            var entity = await this.itemRepository.GetById(id);
+
+            if (entity.UserId != userId)
+            {
+                throw new Exception("userId mismatch");
+            }
+
             return this.mapper.Map<ItemDTO>(await this.itemRepository.GetById(id));
         }
 
-        public async Task<ItemDTO> Update(ItemDTO entity)
+        public async Task<ItemDTO> Update(ItemDTO entity, string userId)
         {
+            var item = await this.GetById(entity.Id.Value, userId);
+
+            if (item == null)
+            {
+                return null;
+            }
+
             var res = await this.itemRepository.Update(this.mapper.Map<Item>(entity));
 
             return this.mapper.Map<ItemDTO>(res);

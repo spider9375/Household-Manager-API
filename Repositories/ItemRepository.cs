@@ -10,21 +10,10 @@ namespace HouseholdManagerApi.Repositories
 
         public async Task<Item> Create(Item entity)
         {
-            var newEntity = new Item()
-            {
-                Name = entity.Name,
-                TagId = entity.TagId,
-                ExpirationDate = entity.ExpirationDate,
-                //ExpirationDate = entity.ExpirationDate != null ? DateTime.SpecifyKind(entity.ExpirationDate.Value, DateTimeKind.Utc) : null,
-                Quantity = entity.Quantity,
-                UnitOfMeasure = entity.UnitOfMeasure,
-            };
-
-            this.dbContext.Items.Add(newEntity);
-
+            await this.dbContext.Items.AddAsync(entity);
             await this.dbContext.SaveChangesAsync();
 
-            return newEntity;
+            return entity;
         }
 
         public async Task Delete(int id)
@@ -38,9 +27,9 @@ namespace HouseholdManagerApi.Repositories
             }
         }
 
-        public async Task<IEnumerable<Item>> GetAll()
+        public IQueryable<Item> GetAll()
         {
-            return await this.dbContext.Items.ToListAsync();
+            return this.dbContext.Items.AsQueryable();
         }
 
         public async Task<Item> GetById(int id)
@@ -59,7 +48,6 @@ namespace HouseholdManagerApi.Repositories
                 result.Name = entity.Name;
                 result.UnitOfMeasure = entity.UnitOfMeasure;
                 result.ExpirationDate = entity.ExpirationDate;
-                //result.ExpirationDate = entity.ExpirationDate != null ? DateTime.SpecifyKind(entity.ExpirationDate.Value, DateTimeKind.Utc) : null;
                 result.TagId = entity.TagId;
                 result.Quantity = entity.Quantity;
 

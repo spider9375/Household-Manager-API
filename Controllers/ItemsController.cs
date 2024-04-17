@@ -1,32 +1,35 @@
 using Microsoft.AspNetCore.Mvc;
-using HouseholdManagerApi.Models;
 using HouseholdManagerApi.DTOs;
 using HouseholdManagerApi.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
+using HouseholdManagerApi.ExtensionMethods;
 
 namespace HouseholdManagerApi.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class ItemsController(IItemService itemService) : ControllerBase
     {
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ItemDTO>>> GetAllTags()
         {
-            return Ok(await itemService.GetAll());
+            // Finds user.
+            return Ok(await itemService.GetAll(this.GetUserIdFromJwtToken()));
         }
 
         [HttpGet]
         [Route("{id:int}")]
         public async Task<ActionResult<ItemDTO>> GetOne(int id)
         {
-            return Ok(await itemService.GetById(id));
+            return Ok(await itemService.GetById(id, this.GetUserIdFromJwtToken()));
         }
 
         [HttpPost]
         [Route("")]
         public async Task<ActionResult<ItemDTO>> Create(ItemDTO tag)
         {
-            return await itemService.Create(tag);
+            return await itemService.Create(tag, this.GetUserIdFromJwtToken());
         }
 
         [HttpPut]
@@ -38,14 +41,14 @@ namespace HouseholdManagerApi.Controllers
                 return BadRequest("Id mismatch");
             }
 
-            return await itemService.Update(tag);
+            return await itemService.Update(tag, this.GetUserIdFromJwtToken());
         }
 
         [HttpDelete]
         [Route("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            await itemService.Delete(id);
+            await itemService.Delete(id, this.GetUserIdFromJwtToken());
 
             return Ok();
         }

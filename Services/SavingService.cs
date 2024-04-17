@@ -29,7 +29,7 @@ namespace HouseholdManagerApi.Services
 
         public async Task<IEnumerable<SavingDTO>> GetAll()
         {
-            var result = await this.savingRepository.GetAll();
+            var result = this.savingRepository.GetAll();
 
             return this.mapper.Map<IEnumerable<Saving>,IEnumerable<SavingDTO>>(result);
         }

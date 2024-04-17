@@ -29,9 +29,9 @@ namespace HouseholdManagerApi.Services
 
         public async Task<IEnumerable<TagDTO>> GetAll()
         {
-            var result = await this.tagRepository.GetAll();
+            var result = this.tagRepository.GetAll();
 
-            return this.mapper.Map<IEnumerable<Tag>,IEnumerable<TagDTO>>(result);
+            return this.mapper.Map<IEnumerable<TagDTO>>(result);
         }
 
         public async Task<TagDTO> GetById(int id)
