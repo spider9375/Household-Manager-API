@@ -34,7 +34,7 @@ namespace HouseholdManagerApi.Controllers
             var user = new IdentityUser { UserName = request.Username, Email = request.Email };
             var result = await this.userManager.CreateAsync(user, request.Password);
 
-            return Ok();
+            return await this.Login(new LoginDTO {Username = request.Username, Password = request.Password });
         }
 
         [Route("login")]

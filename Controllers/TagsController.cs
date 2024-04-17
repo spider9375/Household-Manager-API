@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using HouseholdManagerApi.Models;
 using HouseholdManagerApi.DTOs;
 using HouseholdManagerApi.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
+using HouseholdManagerApi.ExtensionMethods;
 
 namespace HouseholdManagerApi.Controllers
 {
@@ -14,21 +14,21 @@ namespace HouseholdManagerApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TagDTO>>> GetAllTags()
         {
-            return Ok(await tagService.GetAll());
+            return Ok(await tagService.GetAll(this.GetUserIdFromJwtToken()));
         }
 
         [HttpGet]
         [Route("{id:int}")]
         public async Task<ActionResult<TagDTO>> GetOne(int id)
         {
-            return Ok(await tagService.GetById(id));
+            return Ok(await tagService.GetById(id, this.GetUserIdFromJwtToken()));
         }
 
         [HttpPost]
         [Route("")]
         public async Task<ActionResult<TagDTO>> Create(TagDTO tag)
         {
-            return await tagService.Create(tag);
+            return await tagService.Create(tag, this.GetUserIdFromJwtToken());
         }
 
         [HttpPut]
@@ -40,14 +40,14 @@ namespace HouseholdManagerApi.Controllers
                 return BadRequest("Id mismatch");
             }
 
-            return await tagService.Update(tag);
+            return await tagService.Update(tag, this.GetUserIdFromJwtToken());
         }
 
         [HttpDelete]
         [Route("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            await tagService.Delete(id);
+            await tagService.Delete(id, this.GetUserIdFromJwtToken());
 
             return Ok();
         }

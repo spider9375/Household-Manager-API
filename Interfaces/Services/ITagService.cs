@@ -4,10 +4,10 @@ namespace HouseholdManagerApi.Interfaces.Services
 {
     public interface ITagService
     {
-        Task<IEnumerable<TagDTO>> GetAll();
-        Task<TagDTO> GetById(int id);
-        Task<TagDTO> Create(TagDTO entity);
-        Task<TagDTO> Update(TagDTO entity);
-        Task Delete(int id);
+        Task<IEnumerable<TagDTO>> GetAll(string userId);
+        Task<TagDTO> GetById(int id, string userId);
+        Task<TagDTO> Create(TagDTO dto, string userId);
+        Task<TagDTO> Update(TagDTO dto, string userId);
+        Task Delete(int id, string userId);
     }
 }

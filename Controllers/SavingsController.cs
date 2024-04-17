@@ -1,4 +1,5 @@
 ﻿using HouseholdManagerApi.DTOs;
+using HouseholdManagerApi.ExtensionMethods;
 using HouseholdManagerApi.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,21 +20,21 @@ namespace HouseholdManagerApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SavingDTO>>> GetAllSavings()
         {
-            return Ok(await this.savingService.GetAll());
+            return Ok(await this.savingService.GetAll(this.GetUserIdFromJwtToken()));
         }
 
         [HttpGet]
         [Route("{id:int}")]
         public async Task<ActionResult<SavingDTO>> GetOne(int id)
         {
-            return Ok(await this.savingService.GetById(id));
+            return Ok(await this.savingService.GetById(id, this.GetUserIdFromJwtToken()));
         }
 
         [HttpPost]
         [Route("")]
         public async Task<ActionResult<SavingDTO>> Create(SavingDTO saving)
         {
-            return await this.savingService.Create(saving);
+            return await this.savingService.Create(saving, this.GetUserIdFromJwtToken());
         }
 
         [HttpPut]
@@ -45,14 +46,14 @@ namespace HouseholdManagerApi.Controllers
                 return BadRequest("Id mismatch");
             }
 
-            return await this.savingService.Update(saving);
+            return await this.savingService.Update(saving, this.GetUserIdFromJwtToken());
         }
 
         [HttpDelete]
         [Route("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            await this.savingService.Delete(id);
+            await this.savingService.Delete(id, this.GetUserIdFromJwtToken());
 
             return Ok();
         }
