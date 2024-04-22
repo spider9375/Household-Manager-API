@@ -10,19 +10,11 @@ namespace HouseholdManagerApi.Repositories
 
         public async Task<Saving> Create(Saving entity)
         {
-            var newEntity = new Saving()
-            {
-                Name = entity.Name,
-                Amount = entity.Amount,
-                Currency = entity.Currency,
-                Goal = entity.Goal,
-                TagId = entity.TagId,
-            };
-            this.dbContext.Savings.Add(newEntity);
+            this.dbContext.Savings.Add(entity);
 
             await this.dbContext.SaveChangesAsync();
 
-            return newEntity;
+            return entity;
         }
 
         public async Task Delete(int id)

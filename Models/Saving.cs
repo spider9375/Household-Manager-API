@@ -8,6 +8,7 @@ namespace HouseholdManagerApi.Models;
 public partial class Saving
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
     public string Name { get; set; } = null!;

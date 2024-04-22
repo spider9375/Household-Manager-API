@@ -10,17 +10,11 @@ namespace HouseholdManagerApi.Repositories
 
         public async Task<Tag> Create(Tag entity)
         {
-            var newEntity = new Tag()
-            {
-                Name = entity.Name,
-                Color = entity.Color,
-                Icon = entity.Icon,
-            };
-            this.dbContext.Tags.Add(newEntity);
+            this.dbContext.Tags.Add(entity);
 
             await this.dbContext.SaveChangesAsync();
 
-            return newEntity;
+            return entity;
         }
 
         public async Task Delete(int id)
